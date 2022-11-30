@@ -1,0 +1,22 @@
+{
+  "name": "@lenra/github-organization-contributors",
+  "version": "1.0.0",
+  "description": "Add your latest organization contributors to your website",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "github",
+    "organization",
+    "contributors",
+    "website"
+  ],
+  "author": "Lenra",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,19 @@
+from: node:18
+workdir: /app
+root:
+  script:
+    - chown -R 1000 /app
+adds:
+- .
+ignores:
+- node_modules
+- Dockerfile
+- .dockerignore
+- dofigen.yml
+script:
+- pwd
+- ls -al
+- npm i --omit=dev
+cmd:
+  - node
+  - src/server.js
