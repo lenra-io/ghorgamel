@@ -24,43 +24,55 @@ const notContributors = env.GITHUB_IGNORED_CONTRIBUTORS?.split(',').map(id => pa
 const contributorsSize = 12;
 
 app.get('/contributors', async (req, res) => {
-    const repos = await getOrganizationRepos(githubOrganization);
-    const promises = repos.map(async repo => {
-        const collaborators_url = repo.contributors_url.replace(/[{][^}]+[}]/g, "");
-        return callApi(`${collaborators_url}?per_page=100`);
-    });
-    const foundIds = [];
-    const results = await Promise.all(promises);
-    let users = results
-        .flat()
-        .map(({ id, login, html_url, avatar_url }) => ({ id, login, url: html_url, avatar_url }))
-        .filter(user => {
-            if (foundIds.includes(user.id) || notContributors.includes(user.id)) return false;
-            foundIds.push(user.id);
-            return true;
+    try {
+        const repos = await getOrganizationRepos(githubOrganization);
+        const promises = repos.map(async repo => {
+            const collaborators_url = repo.contributors_url.replace(/[{][^}]+[}]/g, "");
+            return callApi(`${collaborators_url}?per_page=100`);
         });
-    const result = [];
-    const size = Math.min(req.query.size || contributorsSize, users.length);
-    while (result.length < size) {
-        const pos = Math.round(Math.random() * (users.length - 1));
-        result.push(users[pos]);
-        users.splice(pos, 1);
+        const foundIds = [];
+        const results = await Promise.all(promises);
+        let users = results
+            .flat()
+            .map(({ id, login, html_url, avatar_url }) => ({ id, login, url: html_url, avatar_url }))
+            .filter(user => {
+                if (foundIds.includes(user.id) || notContributors.includes(user.id)) return false;
+                foundIds.push(user.id);
+                return true;
+            });
+        const result = [];
+        const size = Math.min(req.query.size || contributorsSize, users.length);
+        while (result.length < size) {
+            const pos = Math.round(Math.random() * (users.length - 1));
+            result.push(users[pos]);
+            users.splice(pos, 1);
+        }
+        res.send(result);
     }
-    res.send(result);
+    catch (error) {
+        console.log('An error occured', error);
+        res.status(500).send();
+    }
 });
 
 app.get('/stargazers', async (_req, res) => {
-    const repos = await getOrganizationRepos(githubOrganization);
-    const promises = repos.map(async repo => {
-        return callApi(repo.stargazers_url);
-    });
-    const logins = (await Promise.all(promises))
-        .flat()
-        .map(user => user.login)
-        .filter((value, index, self) => {
-            return self.indexOf(value) === index;
+    try {
+        const repos = await getOrganizationRepos(githubOrganization);
+        const promises = repos.map(async repo => {
+            return callApi(repo.stargazers_url);
         });
-    res.send({ stars: logins.length });
+        const logins = (await Promise.all(promises))
+            .flat()
+            .map(user => user.login)
+            .filter((value, index, self) => {
+                return self.indexOf(value) === index;
+            });
+        res.send({ stars: logins.length });
+    }
+    catch (error) {
+        console.log('An error occured', error);
+        res.status(500).send();
+    }
 });
 
 app.use(express.static(staticPath));

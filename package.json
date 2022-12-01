@@ -1,7 +1,7 @@
 {
-  "name": "@lenra/github-organization-contributors",
+  "name": "@lenra/ghorgaggre",
   "version": "1.0.0",
-  "description": "Add your latest organization contributors to your website",
+  "description": "A JavaScript tool coupled to a REST API to get aggregated informations of your GitHub organization to your website",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
