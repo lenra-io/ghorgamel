@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { env } from 'process';
 import * as url from 'url';
 import { callApi, getOrganizationRepos } from './github-api.js';
@@ -7,21 +8,15 @@ const staticPath = url.fileURLToPath(new URL('static', import.meta.url));;
 const app = express();
 const port = env.PORT || 8080;
 const githubOrganization = env.GITHUB_ORGANIZATION || 'lenra-io';
-const notContributors = env.GITHUB_IGNORED_CONTRIBUTORS?.split(',').map(id => parseInt(id.trim())) || [
-    6428498,// Louis
-    32174276,// Semantic Release Bot
-    38187238,// Flavien
-    8969556,// Thomas
-    45465504,// Emric
-    36544012,// Jonas
-    91874264,// Clement
-    41898282,// GitHub Action Bot
-    87380809,// Jonas 2
-    102291723,// Alienor
-    49699333,// Dependabot
-];
+const corsOrigin = env.CORS_ORIGIN || "*";
+const notContributors = env.GITHUB_IGNORED_CONTRIBUTORS?.split(',').map(login => login.trim()) || [];
 
 const contributorsSize = 12;
+
+app.use(cors({
+    origin: corsOrigin,
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}));
 
 app.get('/contributors', async (req, res) => {
     try {
@@ -36,7 +31,7 @@ app.get('/contributors', async (req, res) => {
             .flat()
             .map(({ id, login, html_url, avatar_url }) => ({ id, login, url: html_url, avatar_url }))
             .filter(user => {
-                if (foundIds.includes(user.id) || notContributors.includes(user.id)) return false;
+                if (foundIds.includes(user.id) || notContributors.includes(user.login)) return false;
                 foundIds.push(user.id);
                 return true;
             });

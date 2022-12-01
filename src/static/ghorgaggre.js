@@ -1,11 +1,12 @@
 (() => {
     const script = document.currentScript;
+    const baseUrl = script.src.substring(0, script.src.lastIndexOf('/'));
     switch (script.dataset.type) {
         case "stargazers":
-            integrateStargazers();
+            integrateStargazers().catch(error => console.error('Failed loading stargazers', error));
             break;
         case "contributors":
-            integrateContributors();
+            integrateContributors().catch(error => console.error('Failed loading contributors', error));
             break;
     }
 
@@ -16,7 +17,7 @@
         script.parentElement.insertBefore(span, script);
 
         // Loading data
-        const stargazers = await fetch('stargazers').then(resp => resp.json());
+        const stargazers = await fetch(`${baseUrl}/stargazers`).then(resp => resp.json());
 
         // Filling skeleton
         span.innerText = stargazers.stars;
@@ -39,7 +40,7 @@
         script.parentElement.insertBefore(nav, script);
 
         // Loading data
-        const contributors = await fetch(`contributors?size=${size}`).then(resp => resp.json());
+        const contributors = await fetch(`${baseUrl}/contributors?size=${size}`).then(resp => resp.json());
 
         // Filling skeleton
         contributors.forEach((contributor, i) => {

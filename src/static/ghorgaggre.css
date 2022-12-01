@@ -3,9 +3,9 @@
     --ghorgaggre-loading-background-opacity: 0.2;
     --ghorgaggre-contributors-image-size: 4.25em;
     --ghorgaggre-contributors-image-border-radius: 50%;
-    --ghorgaggre-contributors-width: 7.5em;
     --ghorgaggre-contributors-image-spacing: 1em;
     --ghorgaggre-contributors-spacing: 2em;
+    --ghorgaggre-contributors-width: 7.5em;
 }
 
 nav.contributors {
@@ -30,6 +30,7 @@ nav.contributors>a>figure {
 }
 
 nav.contributors>a>figure>img {
+    background-color: rgba(var(--ghorgaggre-loading-background-color-data), var(--ghorgaggre-loading-background-opacity));
     width: var(--ghorgaggre-contributors-image-size);
     border-radius: var(--ghorgaggre-contributors-image-border-radius);
     aspect-ratio: 1;
