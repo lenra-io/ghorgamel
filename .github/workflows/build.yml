@@ -44,15 +44,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Install dofigen
-      env:
-        DOFIGEN_VERSION: v1.1.0
       run: | 
-        curl -sSLO https://github.com/lenra-io/dofigen/releases/download/${DOFIGEN_VERSION}/dofigen-linux-x86_64.tar.gz
+        curl -sSLO https://github.com/lenra-io/dofigen/releases/latest/download/dofigen-linux-x86_64.tar.gz
         tar -xvzf dofigen-linux-x86_64.tar.gz
         chmod +x target/x86_64-unknown-linux-musl/release/dofigen
         echo "PATH=\"${PATH}:$PWD/target/x86_64-unknown-linux-musl/release/\"" >> $GITHUB_ENV
     - name: Generate Dockerfile
-      run: target/x86_64-unknown-linux-musl/release/dofigen
+      run: target/x86_64-unknown-linux-musl/release/dofigen dofigen.yml
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
