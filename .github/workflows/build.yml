@@ -43,17 +43,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Install Lenra-cli
+    - name: Install dofigen
       env:
-        LENRA_CLI_VERSION: v1.0.0-beta.16
+        DOFIGEN_VERSION: v1.1.0
       run: | 
-        curl -sSLO https://github.com/lenra-io/lenra_cli/releases/download/${LENRA_CLI_VERSION}/lenra-linux-x86_64.tar.gz
-        tar -xvzf lenra-linux-x86_64.tar.gz
-        chmod +x target/x86_64-unknown-linux-musl/release/lenra
+        curl -sSLO https://github.com/lenra-io/dofigen/releases/download/${DOFIGEN_VERSION}/dofigen-linux-x86_64.tar.gz
+        tar -xvzf dofigen-linux-x86_64.tar.gz
+        chmod +x target/x86_64-unknown-linux-musl/release/dofigen
         echo "PATH=\"${PATH}:$PWD/target/x86_64-unknown-linux-musl/release/\"" >> $GITHUB_ENV
-        ls -lia
     - name: Generate Dockerfile
-      run: target/x86_64-unknown-linux-musl/release/lenra init
+      run: target/x86_64-unknown-linux-musl/release/dofigen
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
