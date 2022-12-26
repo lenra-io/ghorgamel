@@ -94,7 +94,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
           DOCKER_IMAGE: lenra/ghorgamel
-          BUILDKIT=true
         run: |
           sudo chown $USER:$USER .github/release.sh
           sudo chmod +x .github/release.sh
