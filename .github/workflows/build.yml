@@ -49,7 +49,7 @@ jobs:
       run: | 
         curl -sSLO https://github.com/lenra-io/lenra_cli/releases/download/${LENRA_CLI_VERSION}/lenra-linux-x86_64.tar.gz
         tar -xvzf lenra-linux-x86_64.tar.gz
-        echo "$PWD/target/x86_64-unknown-linux-musl/release/" >> GITHUB_ENV
+        echo "PATH=${PATH}:$PWD/target/x86_64-unknown-linux-musl/release/" >> GITHUB_ENV
     - name: Generate Dockerfile
       run: lenra init
     - name: Setup Node.js
@@ -73,7 +73,7 @@ jobs:
     - id: retrieve-tags
       name: Retrieve tags
       run: |
-        echo "docker-tags=$(sh -c .github/release.sh)" >> GITHUB_OUTPUT
+        echo "docker-tags=$(sh -c ".github/release.sh ${{ steps.get-next-version.outputs.new-release-version }}")" >> GITHUB_OUTPUT
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
