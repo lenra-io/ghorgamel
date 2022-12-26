@@ -1,4 +1,4 @@
-from: node:18
+image: node:18
 workdir: /app
 root:
   script:
