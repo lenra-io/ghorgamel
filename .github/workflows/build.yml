@@ -51,6 +51,7 @@ jobs:
         tar -xvzf lenra-linux-x86_64.tar.gz
         chmod +x target/x86_64-unknown-linux-musl/release/lenra
         echo "PATH=\"${PATH}:$PWD/target/x86_64-unknown-linux-musl/release/\"" >> $GITHUB_ENV
+        ls -lia
     - name: Generate Dockerfile
       run: target/x86_64-unknown-linux-musl/release/lenra init
     - name: Setup Node.js
