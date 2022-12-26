@@ -1,5 +1,5 @@
 {
-  "name": "@lenra/ghorgaggre",
+  "name": "@lenra/ghorgamel",
   "version": "1.0.0",
   "description": "A JavaScript tool coupled to a REST API to get aggregated informations of your GitHub organization to your website",
   "main": "src/server.js",
