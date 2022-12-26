@@ -10,6 +10,7 @@ on:
   pull_request:
     paths-ignore:
       - '*.md'
+  workflow_dispatch:
 
 jobs:
   get-next-version:
@@ -89,6 +90,7 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
       - name: Release
+        if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
           DOCKER_IMAGE: lenra/ghorgamel
