@@ -49,6 +49,7 @@ jobs:
       run: | 
         curl -sSLO https://github.com/lenra-io/lenra_cli/releases/download/${LENRA_CLI_VERSION}/lenra-linux-x86_64.tar.gz
         tar -xvzf lenra-linux-x86_64.tar.gz
+        chmod +x target/x86_64-unknown-linux-musl/release/lenra
         echo "PATH=\"${PATH}:$PWD/target/x86_64-unknown-linux-musl/release/\"" >> $GITHUB_ENV
     - name: Generate Dockerfile
       run: lenra init
