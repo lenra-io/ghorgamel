@@ -1,0 +1,23 @@
+{
+  "name": "@lenra/ghorgamel",
+  "version": "1.0.0",
+  "description": "A JavaScript tool coupled to a REST API to get aggregated informations of your GitHub organization to your website",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "github",
+    "organization",
+    "contributors",
+    "website"
+  ],
+  "author": "Lenra",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
