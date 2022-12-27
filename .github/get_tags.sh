@@ -22,23 +22,20 @@ if [[ $version =~ $regex ]]; then
 
         arr_version=( "${major}" "${major}.${minor}" "${major}.${minor}.${patch}" )
         if [[ -n "${channel}" ]]; then
-        tag="${tag},${DOCKER_IMAGE}:${channel}"
-        for i in "${arr_version[@]}"; do
-            tag="${tag},${DOCKER_IMAGE}:${i}-${channel}"
-        done
+            tag="${tag},${DOCKER_IMAGE}:${channel}"
+            for i in "${arr_version[@]}"; do
+                tag="${tag},${DOCKER_IMAGE}:${i}-${channel}"
+            done
         else
-        tag="${DOCKER_IMAGE}:latest"
-        for i in "${arr_version[@]}"; do
-            tag="${tag},${DOCKER_IMAGE}:${i}"
-        done
-        echo "$tag"
+            tag="${DOCKER_IMAGE}:latest"
+            for i in "${arr_version[@]}"; do
+                tag="${tag},${DOCKER_IMAGE}:${i}"
+            done
+            echo "$tag"
         fi
-        return 0
     else
         echo "Version '$v' didn't pass Regex '$regex'." 1>&2
-        return 1
     fi
 else
     echo "Version '$version' didn't pass Regex '$regex'." 1>&2
-    return 1
 fi
