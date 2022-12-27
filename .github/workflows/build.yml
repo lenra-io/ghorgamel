@@ -72,6 +72,7 @@ jobs:
     - id: retrieve-tags
       name: Retrieve tags
       run: |
+        chmod +x .github/get_tags.sh
         echo "docker-tags=$(sh -c ".github/get_tags.sh ${{ steps.get-next-version.outputs.new-release-version }}")" >> $GITHUB_OUTPUT
     - name: Build and push
       uses: docker/build-push-action@v3
