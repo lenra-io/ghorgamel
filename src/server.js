@@ -15,14 +15,15 @@ const contributorsSize = 12;
 
 app.use(cors({
     origin: corsOrigin,
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    // some legacy browsers (IE11, various SmartTVs) choke on 204
+    optionsSuccessStatus: 200
 }));
 
 app.get('/contributors', async (req, res) => {
     try {
         const repos = await getOrganizationRepos(githubOrganization);
         const promises = repos.map(async repo => {
-            const collaborators_url = repo.contributors_url.replace(/[{][^}]+[}]/g, "");
+            const collaborators_url = repo.contributors_url.replace(/\{[^}]+\}/g, "");
             return callApi(`${collaborators_url}?per_page=100`);
         });
         const foundIds = [];

@@ -1,4 +1,4 @@
-from: node:18
+from: docker.io/bitnami/node:18
 workdir: /app
 root:
   script:
@@ -11,9 +11,7 @@ ignores:
 - .dockerignore
 - dofigen.yml
 script:
-- pwd
-- ls -al
-- npm i --omit=dev
-cmd:
-  - node
-  - src/server.js
+- npm ci
+entrypoint:
+  - npm
+  - start
