@@ -48,7 +48,7 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: install
-        args: dofigen
+        args: dofigen -F cli
 
     - name: Generate Dockerfile
       run: dofigen dofigen.yml
