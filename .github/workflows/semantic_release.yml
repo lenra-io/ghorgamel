@@ -8,26 +8,6 @@ on:
       - "*.x"
 
 jobs:
-  get-next-version:
-    name: Get next version
-    runs-on: ubuntu-20.04
-    continue-on-error: true # must be allow to fail
-    timeout-minutes: 2
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - id: get-next-version
-      name: Get next version
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npx -p conventional-changelog-conventionalcommits@5 -p @semantic-release/git -p semantic-release-export-data -p semantic-release@19 semantic-release --dry-run
-    outputs:
-      new-release-published: ${{ steps.get-next-version.outputs.new-release-published }}
-      new-release-version: ${{ steps.get-next-version.outputs.new-release-version }}
   release:
     name: Release
     runs-on: ubuntu-latest
