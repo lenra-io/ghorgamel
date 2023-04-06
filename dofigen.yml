@@ -5,13 +5,12 @@ root:
     - chown -R 1000 /app
 adds:
 - .
-ignores:
-- node_modules
-- Dockerfile
-- .dockerignore
-- dofigen.yml
 script:
 - npm ci
 entrypoint:
   - npm
   - start
+ignores:
+- "*"
+- "!src/"
+- "!*.json"

@@ -14,6 +14,7 @@ export async function callApi(url) {
     if (!(url in cache) || now - cache[url].time > cacheDuration) {
         const options = githubToken ? { headers: { "Authorization": `Bearer ${githubToken}` } } : undefined;
         const resp = await fetch(url, options);
+        if (!resp.ok) throw new Error(`Fetch error [${resp.status}] ${resp.statusText}`);
         const result = await resp.json();
         cache[url] = {
             result,
