@@ -38,5 +38,5 @@ export async function callApi(url) {
  * @returns {Promise<Repository[]>}
  */
 export async function getOrganizationRepos(organization) {
-    return callApi(`https://api.github.com/orgs/${organization}/repos?per_page=100`);
+    return callApi(`https://api.github.com/orgs/${organization}/repos?type=source&per_page=100`);
 }
