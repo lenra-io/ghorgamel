@@ -45,7 +45,7 @@
  Start a Ghorgamel server with Docker: 
 
 ```bash
-docker run -it --rm --env GITHUB_ORGANIZATION="lenra-io" lenra/ghorgamel
+docker run -it --rm -p 8080:8080 --env GITHUB_ORGANIZATION="lenra-io" lenra/ghorgamel
 ```
  
 Or from the source code:
