@@ -3,6 +3,7 @@ workdir: /app
 root:
   script:
     - chown -R 1000 /app
+    - chown -R 1000 /.npm
 adds:
 - .
 script:
